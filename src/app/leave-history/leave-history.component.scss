@@ -1,0 +1,118 @@
+/* สไตล์พื้นฐานสำหรับ mat-card */
+.statistics-card {
+  max-width: 1000px;
+  margin: 20px auto;
+  padding: 20px;
+  margin-top: 5px;
+  background-color: #fff;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+mat-form-field {
+  width: 200px;
+  margin-right: 20px;
+  width: 95%;
+}
+
+.mat-card-title {
+  font-size: 1.8rem;
+  font-weight: bold;
+  color: #333;
+}
+
+.mat-card-subtitle {
+  font-size: 1rem;
+  color: #666;
+}
+
+/* ปรับปุ่ม Export Excel */
+.export-btn {
+  background-color: #4caf50; 
+  color: white;
+  border: none;  /* ลบขอบของปุ่ม */
+  border-radius: 20px;  
+  font-weight: bold;
+  padding: 10px 20px;
+  position: absolute;
+  right: 30px;
+  top: 20px;
+}
+
+/* สำหรับมือถือและแท็บเล็ต */
+@media (max-width: 768px) {
+  /* ปรับการแสดงผลของ mat-card ให้กว้างขึ้น */
+  .statistics-card {
+    width: 90%; /* ขยายให้เหมาะกับหน้าจอเล็ก */
+    padding: 15px; /* ลดช่องว่าง */
+  }
+
+  mat-form-field {
+    width: 100%; /* ปรับฟอร์มให้กว้างเต็ม */
+    margin-right: 0;
+  }
+
+  .mat-card-title {
+    font-size: 1.4rem; /* ลดขนาดฟอนต์ */
+  }
+
+  .mat-card-subtitle {
+    font-size: 0.9rem; /* ลดขนาดฟอนต์ */
+  }
+
+  .export-btn {
+    position: static;  /* ปรับปุ่มให้แสดงเป็นบรรทัดเดียว */
+    width: 100%;
+    margin-top: 10px;
+  }
+
+  mat-header-row {
+    background-color: #f5f5f5;
+  }
+
+  mat-table {
+    font-size: 12px;  /* ลดขนาดฟอนต์ในตาราง */
+  }
+
+  mat-form-field {
+    margin-right: 0;
+  }
+
+  .chart-container {
+    height: 250px; /* ลดขนาดกราฟ */
+  }
+}
+
+/* สำหรับโทรศัพท์มือถือขนาดเล็ก */
+@media (max-width: 480px) {
+  .statistics-card {
+    width: 100%; /* ขยายให้เต็มหน้าจอ */
+    padding: 10px; /* ลดช่องว่าง */
+  }
+
+  .mat-card-title {
+    font-size: 1.2rem; /* ลดขนาดฟอนต์ */
+  }
+
+  .mat-card-subtitle {
+    font-size: 0.8rem; /* ลดขนาดฟอนต์ */
+  }
+
+  .export-btn {
+    font-size: 14px; /* ลดขนาดปุ่ม */
+    padding: 8px 15px; /* ลดขนาดปุ่ม */
+  }
+
+  .chart-container {
+    height: 200px; /* ลดขนาดกราฟ */
+  }
+
+  mat-form-field {
+    width: 100%; /* ให้ฟอร์มเต็มความกว้าง */
+    margin-right: 0;
+  }
+
+  /* ปรับการแสดงผลของตาราง */
+  mat-table {
+    font-size: 10px;
+  }
+}

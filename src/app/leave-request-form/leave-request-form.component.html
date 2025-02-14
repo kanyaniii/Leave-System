@@ -1,0 +1,47 @@
+<div class="container">
+  <div class="form">
+    <h2>แบบฟอร์มขอลางาน</h2>
+
+    <mat-form-field>
+      <mat-label>เลือกประเภทการลา</mat-label>
+      <mat-select [(ngModel)]="leaveType" name="leaveType">
+        <mat-option value="ลาพักร้อน">ลาพักร้อน</mat-option>
+        <mat-option value="ลาป่วย">ลาป่วย</mat-option>
+        <mat-option value="ลากิจ">ลากิจ</mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <div style="display: flex; gap: 16px; width: 100%;">
+      <mat-form-field>
+        <mat-label>วันที่เริ่มต้น</mat-label>
+        <mat-hint class="hint-start">MM/DD/YYYY</mat-hint>
+        <input matInput [(ngModel)]="startDate" [matDatepicker]="startPicker" placeholder="mm/dd/yyyy" name="startDate">
+        <mat-datepicker-toggle matIconSuffix [for]="startPicker"></mat-datepicker-toggle>
+        <mat-datepicker #startPicker></mat-datepicker>
+      </mat-form-field>
+
+      <mat-form-field>
+        <mat-label>วันที่สิ้นสุด</mat-label>
+        <mat-hint class="hint-end">MM/DD/YYYY</mat-hint>
+        <input matInput [(ngModel)]="endDate" [matDatepicker]="endPicker" placeholder="mm/dd/yyyy" name="endDate">
+        <mat-datepicker-toggle matIconSuffix [for]="endPicker"></mat-datepicker-toggle>
+        <mat-datepicker #endPicker></mat-datepicker>
+      </mat-form-field>
+    </div>
+
+    <mat-form-field>
+      <mat-label>เหตุผลการลา</mat-label>
+      <textarea matInput [(ngModel)]="leaveReason" name="leaveReason"></textarea>
+    </mat-form-field>
+
+
+    <section>
+      <div class="action-buttons">
+        <button mat-raised-button color="dang" (click)="onCancel()">ยกเลิก</button>
+        <button mat-raised-button color="primary" (click)="onSubmit()">ส่งคำขอลา</button>
+      </div>
+    </section>
+    
+
+  </div>
+</div>

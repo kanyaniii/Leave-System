@@ -1,0 +1,69 @@
+<div class="dashboard-container">
+  <mat-card class="statistics-card">
+    <div class="stat-item">
+      <mat-icon class="stat-icon">calendar_today</mat-icon>
+      <div class="stat-text">
+        <span>วันลาคงเหลือ</span>
+        <strong>{{ getRemainingLeaveDays() }} วัน</strong>
+      </div>
+    </div>
+    <div class="stat-item">
+      <mat-icon class="statp-icon">hourglass_empty</mat-icon>
+      <div class="stat-text">
+        <span>คำขอลาที่รออนุมัติ</span>
+        <strong>{{ pendingRequests.length }} รายการ</strong>
+      </div>
+    </div>
+    <div class="stat-item">
+      <mat-icon class="stats-icon">insert_drive_file</mat-icon>
+      <div class="stat-text">
+        <span>วันลาที่ใช้ไปทั้งหมดในปีนี้</span>
+        <strong>{{ totalLeaveUsed }}  วัน</strong>
+      </div>
+    </div>
+  </mat-card>  
+
+    <mat-card class="latest-leaves-card">
+      <mat-card-title class="table-title">รายการลาล่าสุด</mat-card-title>
+      <mat-table [dataSource]="dataSource">
+        <ng-container matColumnDef="startDate">
+          <mat-header-cell *matHeaderCellDef> วันที่เริ่มต้น </mat-header-cell>
+          <mat-cell *matCellDef="let row"> {{getFormattedStartDate(row.startDate)}} </mat-cell>
+        </ng-container>
+      
+        <ng-container matColumnDef="endDate">
+          <mat-header-cell *matHeaderCellDef> วันที่สิ้นสุด </mat-header-cell>
+          <mat-cell *matCellDef="let row"> {{getFormattedEndDate(row.endDate)}} </mat-cell>
+        </ng-container>
+      
+        <ng-container matColumnDef="leaveType">
+          <mat-header-cell *matHeaderCellDef> ประเภทการลา </mat-header-cell>
+          <mat-cell *matCellDef="let row"> {{row.leaveType}} </mat-cell>
+        </ng-container>
+      
+        <ng-container matColumnDef="days">
+          <mat-header-cell *matHeaderCellDef> จำนวนวัน </mat-header-cell>
+          <mat-cell *matCellDef="let row"> {{row.days}} วัน </mat-cell>
+        </ng-container>
+      
+        <ng-container matColumnDef="status">
+          <mat-header-cell *matHeaderCellDef> สถานะ </mat-header-cell>
+          <mat-cell *matCellDef="let row">
+            <mat-chip [color]="row.status === 'รออนุมัติ' ? 'primary' : 'warn'">{{row.status}}</mat-chip>
+          </mat-cell>
+        </ng-container>
+      
+        <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+        <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+      </mat-table>
+        
+
+      <mat-paginator [length]="100"
+        [pageSize]="10"
+        [pageSizeOptions]="[5, 10, 25, 100]"
+        aria-label="Select page">
+      </mat-paginator>
+    </mat-card>
+
+  </div>
+  

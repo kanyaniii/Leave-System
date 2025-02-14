@@ -1,0 +1,18 @@
+<div class="role-selection-container">
+    <mat-card class="card-container">
+      <mat-card-header>
+        <mat-card-title class="title">เลือกบทบาทของคุณ</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <div class="role-buttons">
+          <button mat-raised-button color="primary" class="role-button" (click)="navigateToEmployee()">
+            <mat-icon>person</mat-icon> พนักงาน
+          </button>
+          <button mat-raised-button color="accent" class="role-button" (click)="navigateToManager()">
+            <mat-icon>admin_panel_settings</mat-icon> ผู้จัดการ
+          </button>
+        </div>
+      </mat-card-content>
+    </mat-card>
+  </div>
+  

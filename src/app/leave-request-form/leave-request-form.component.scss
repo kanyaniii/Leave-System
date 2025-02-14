@@ -1,0 +1,157 @@
+.statistics-card {
+  max-width: 1000px;
+  margin: 20px auto;
+  padding: 20px;
+  margin-top: 5px;
+  background-color: #fff;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  width: 100%;
+}
+
+.hint-start {
+    display: block;
+    text-align: left;
+  }
+
+.hint-end {
+  display: block;
+  text-align: right;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  padding: 20px;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  min-height: 50vh;
+  padding: 50px;
+  border-radius: 10px;  
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1), 0 8px 16px rgba(0, 0, 0, 0.1); 
+  width: 72%;
+
+}
+
+.mat-form-field {
+  background-color: #f4f4f4; 
+  border-radius: 5px; 
+  
+}
+
+.mat-form-field-label {
+  color: #333; /* สีของป้ายข้อความในช่องกรอก */
+}
+
+.mat-input-element {
+  color: #333; /* สีของข้อความที่กรอก */
+}
+
+.mat-select-trigger {
+  background-color: #ffffff; /* สีพื้นหลังของ dropdown */
+}
+
+.mat-select-value {
+  color: #333; /* สีของข้อความใน dropdown */
+}
+
+h2 {
+  font-size: 24px;
+  margin-bottom: 20px;
+}
+
+.form-container {
+  width: 100%;
+  max-width: 600px;
+  padding: 20px;
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.date-picker-container {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+mat-form-field {
+  width: 100%;
+}
+
+.action-buttons {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 20px;
+}
+
+button {
+  margin-top: 10px;
+}
+
+button[color="primary"] {
+  background-color: #4caf50; 
+  color: white;
+  border: none;  
+  border-radius: 20px;
+  padding: 10px 20px;
+}
+
+button[color="dang"] {
+  background-color: #CC0033; 
+  color: white;
+  border: none;  
+  border-radius: 20px;
+  padding: 10px 20px;
+}
+
+
+/* Media Query สำหรับหน้าจอที่เล็กลง */
+@media (max-width: 768px) {
+  .form {
+    width: 90%; /* ขยายฟอร์มให้กว้างขึ้นบนหน้าจอมือถือ */
+    padding: 20px; /* ลดช่องว่าง */
+  }
+
+  .example-button-container {
+    flex-direction: column; /* แสดงปุ่มในแนวตั้ง */
+    align-items: center; /* จัดปุ่มตรงกลาง */
+  }
+
+  .example-button-container button {
+    width: 100%; /* ให้ปุ่มใช้ความกว้างเต็ม */
+    margin: 5px 0; /* เพิ่มระยะห่างระหว่างปุ่ม */
+  }
+
+  h2 {
+    font-size: 20px; /* ลดขนาดฟอนต์ให้เล็กลง */
+  }
+
+  .mat-form-field {
+    width: 100%; /* ให้ช่องกรอกข้อความเต็มความกว้าง */
+  }
+}
+
+/* Media Query สำหรับหน้าจอที่เล็กกว่ามือถือ */
+@media (max-width: 480px) {
+  .form {
+    padding: 10px; /* ลดช่องว่างมากขึ้น */
+  }
+
+  h2 {
+    font-size: 18px; /* ลดขนาดฟอนต์ */
+  }
+
+  .example-button-container button {
+    font-size: 14px; /* ลดขนาดฟอนต์ของปุ่ม */
+    padding: 12px; /* ลดขนาดปุ่ม */
+  }
+}

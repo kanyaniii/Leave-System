@@ -1,0 +1,90 @@
+<mat-card class="statistics-card">
+    <mat-card-title>สถิติการลาประจำเดือน</mat-card-title>
+    <mat-card-subtitle>ข้อมูลการลาของพนักงานทั้งหมด</mat-card-subtitle>
+      
+    <button mat-raised-button color="primary" class="export-btn" (click)="exportToExcel()">
+      Export Excel
+    </button>
+</mat-card>
+
+  <mat-card class="statistics-card">
+        <div style="display: flex; gap: 16px;">
+          <mat-form-field>
+            <mat-label>เลือกเดือน</mat-label>
+            <mat-hint class="hint-start">MM/DD/YYYY</mat-hint>
+            <input matInput [matDatepicker]="startPicker" placeholder="mm/dd/yyyy">
+            <mat-datepicker-toggle matIconSuffix [for]="startPicker"></mat-datepicker-toggle>
+            <mat-datepicker #startPicker></mat-datepicker>
+          </mat-form-field>
+      </div>
+  
+      <mat-form-field>
+        <mat-label>แผนก</mat-label>
+          <mat-select>
+            <mat-option value="one">ทั้งหมด</mat-option>
+            <mat-option value="two">IT</mat-option>
+            <mat-option value="two">SD</mat-option>
+          </mat-select>
+      </mat-form-field>
+</mat-card>
+    
+<!-- <mat-card class="statistics-card">
+        <h3>สรุปการลาแยกตามประเภท</h3>
+        <div #leaveChart style="width: 100%; height: 300px;"></div> -->
+        <!-- <div style="display: block;">
+          <canvas baseChart
+                  [datasets]="lineChartData"
+                  [labels]="lineChartLabels"
+                  [options]="lineChartOptions"
+                  [colors]="lineChartColors"
+                  [legend]="true"
+                  [chartType]="'line'">
+          </canvas>
+        </div> -->
+        
+<!-- </mat-card> -->
+
+<mat-card class="statistics-card">
+      <h3>รายละเอียดการรายบุคคล</h3>
+      <mat-table [dataSource]="leaveDetails">
+        <ng-container matColumnDef="name">
+          <mat-header-cell *matHeaderCellDef> ชื่อ-นามสกุล </mat-header-cell>
+          <mat-cell *matCellDef="let row">{{row.name}}</mat-cell>
+        </ng-container>
+    
+        <ng-container matColumnDef="leaveType">
+          <mat-header-cell *matHeaderCellDef> แผนก </mat-header-cell>
+          <mat-cell *matCellDef="let row">{{row.leaveType}}</mat-cell>
+        </ng-container>
+    
+        <ng-container matColumnDef="sickLeave">
+          <mat-header-cell *matHeaderCellDef> ลาป่วย </mat-header-cell>
+          <mat-cell *matCellDef="let row">{{row.sickLeave}}</mat-cell>
+        </ng-container>
+    
+        <ng-container matColumnDef="personalLeave">
+          <mat-header-cell *matHeaderCellDef> ลากิจ </mat-header-cell>
+          <mat-cell *matCellDef="let row">{{row.personalLeave}}</mat-cell>
+        </ng-container>
+    
+        <ng-container matColumnDef="vacationLeave">
+          <mat-header-cell *matHeaderCellDef> ลาพักร้อน </mat-header-cell>
+          <mat-cell *matCellDef="let row">{{row.vacationLeave}}</mat-cell>
+        </ng-container>
+    
+        <ng-container matColumnDef="together">
+          <mat-header-cell *matHeaderCellDef> รวม </mat-header-cell>
+          <mat-cell *matCellDef="let row">{{row.together}}</mat-cell>
+        </ng-container>
+    
+        <mat-header-row *matHeaderRowDef="['name', 'leaveType', 'sickLeave', 'personalLeave', 'vacationLeave', 'together']"></mat-header-row>
+        <mat-row *matRowDef="let row; columns: ['name', 'leaveType', 'sickLeave', 'personalLeave', 'vacationLeave', 'together'];"></mat-row>
+      </mat-table>
+
+      <mat-paginator [length]="100"
+        [pageSize]="10"
+        [pageSizeOptions]="[5, 10, 25, 100]"
+        aria-label="Select page">
+      </mat-paginator>
+</mat-card>
+  

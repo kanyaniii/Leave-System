@@ -1,1 +1,45 @@
-/* You can add global styles to this file, and also import other style files */
+// styles.scss
+@use '@angular/material' as mat;
+
+// รวม styles พื้นฐานสำหรับ Angular Material
+@include mat.core();
+
+// กำหนดธีมสำหรับ Light Mode
+$leaveSystem-angular-theme: mat.define-theme((
+  color: (
+    theme-type: light,  // ใช้ธีมสว่าง
+    primary: mat.$azure-palette,  // เลือกสีหลักจาก palette ของ Azure
+    tertiary: mat.$blue-palette,  // เลือกสีรองจาก palette ของ Blue
+  ),
+  density: (
+    scale: 0,  // ตั้งค่าความหนาแน่นของคอมโพเนนต์
+  )
+));
+
+// กำหนดธีมสำหรับ Dark Mode
+$dark-theme: mat.define-theme((
+  color: (
+    theme-type: dark,  // ใช้ธีมมืด
+    primary: mat.$violet-palette,  // เลือกสีหลักจาก palette ของ Violet
+  ),
+  density: (
+    scale: 0,  // ตั้งค่าความหนาแน่นของคอมโพเนนต์
+  )
+));
+
+// รวม theme styles สำหรับคอมโพเนนต์ทั้งหมดในแอปพลิเคชัน
+:root {
+  @include mat.all-component-themes($leaveSystem-angular-theme); // ธีมสว่างเป็นค่าเริ่มต้น
+}
+
+html[data-theme="light"] {
+  @include mat.core-theme($leaveSystem-angular-theme);
+}
+
+html[data-theme="dark"] {
+  @include mat.core-theme($dark-theme);
+}
+
+// เพิ่มฟอนต์และการตั้งค่าหน้าเว็บไซต์
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }

@@ -1,0 +1,16 @@
+<mat-drawer-container class="navbar">
+  <mat-drawer-content>
+    <mat-card class="statistics-card">
+      <mat-card-title class="card-title">ระบบลางาน</mat-card-title>
+      <mat-divider></mat-divider>
+      <mat-tab-group class="tab-group">
+        <!-- ใช้ click handler ในการเปลี่ยนหน้า -->
+        <mat-tab label="แดชบอร์ด" (click)="navigateToDashboard()"></mat-tab>
+        <mat-tab label="ขอลางาน" (click)="navigateToLeaveRequest()"></mat-tab>
+        <mat-tab label="ประวัติการลา" (click)="navigateToLeaveHistory()"></mat-tab>
+      </mat-tab-group>
+    </mat-card>
+  </mat-drawer-content>
+</mat-drawer-container>
+
+

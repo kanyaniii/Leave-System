@@ -1,0 +1,57 @@
+<mat-card-header class="card-header">
+  <mat-card-title>รายการขออนุมัติการลา</mat-card-title>
+  <mat-card-subtitle>รายการที่รอการอนุมัติทั้งหมด {{ pendingRequests.length }} รายการ</mat-card-subtitle>
+</mat-card-header>
+
+<mat-card *ngFor="let request of pendingRequests" class="approval-card">
+  <mat-card-title>{{ request.leaveType }}</mat-card-title>
+  <mat-card-subtitle>นักศึกษาฝึกงาน</mat-card-subtitle>
+  <button mat-raised-button color="warn" *ngIf="request.status === 'รออนุมัติ'">รออนุมัติ</button>
+
+  <mat-divider></mat-divider>
+
+  <mat-card-content>
+    <div class="approval-details">
+      <div class="detail-row">
+        <div class="detail-item">
+          <span>ประเภทการลา</span>
+          <strong>{{ request.leaveType }}</strong>
+        </div>
+        <div class="detail-day">
+          <span>จำนวนวัน</span>
+          <strong>{{ calculateDays(request.startDate, request.endDate) }} วัน</strong>
+        </div>
+      </div>
+
+      <div class="detail-row">
+        <div class="detail-start">
+          <span>วันเริ่มต้น</span>
+          <strong>{{ getFormattedStartDate(request.startDate) }}</strong>
+        </div>
+        <div class="detail-end">
+          <span>วันสิ้นสุด</span>
+          <strong>{{ getFormattedEndDate(request.endDate) }}</strong>
+        </div>
+      </div>
+
+      <div class="detail-reason">
+        <span>เหตุผลการลา</span>
+        <strong>{{ request.leaveReason }}</strong>
+      </div>
+    </div>
+
+    <mat-form-field appearance="fill" class="full-width">
+      <mat-label>ความคิดเห็น</mat-label>
+      <textarea matInput [(ngModel)]="comment" placeholder="เพิ่มความคิดเห็น..."></textarea>
+    </mat-form-field>
+
+    <div class="action-buttons">
+      <button mat-raised-button color="dang" (click)="rejectLeave(request)">
+        <mat-icon>close</mat-icon> ไม่อนุมัติ
+      </button>
+      <button mat-raised-button color="primary" (click)="approveLeave(request)">
+        <mat-icon>check</mat-icon> อนุมัติ
+      </button>
+    </div>
+  </mat-card-content>
+</mat-card>
