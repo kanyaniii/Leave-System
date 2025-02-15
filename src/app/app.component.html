@@ -1,22 +1,26 @@
 <div class="main-container">
   <div class="nav-container">
+    <button  class="theme" (click)="toggleTheme()">
+      <mat-icon>{{ isDarkMode ? 'brightness_7' : 'brightness_6' }}</mat-icon>
+    </button>
+    <img class="img" src="assets/images/Leave.png" alt=""/>
     <ul>
       <li><a href="dashboard">แดชบอร์ด</a></li>
       <li><a href="leave-request-form">ขอลางาน</a></li>
       <li><a href="leave-history">ประวัติการลา</a></li>
+      <li><a href="leave-balance-display">รายการขออนุมัติ</a></li>
     </ul>
   </div>
 
   <div class="component-container">
-    <!-- <button mat-icon-button (click)="toggleTheme()">
-      <mat-icon>{{ isDarkMode ? 'brightness_7' : 'brightness_6' }}</mat-icon>
-    </button> -->
+    
 
     <!-- <app-navbar></app-navbar> -->
+    <!-- <app-datepicker></app-datepicker> -->
+
     <!-- <app-leave-history></app-leave-history> -->
     <!-- <app-dashboard></app-dashboard> -->
     <!-- <app-leave-request-form></app-leave-request-form> -->
-
     <!-- <app-leave-balance-display></app-leave-balance-display> -->
     <!-- <app-role-guard></app-role-guard> -->
     <router-outlet></router-outlet>

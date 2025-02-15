@@ -1,7 +1,36 @@
-<form action="">
-     <!-- ปฏิทินวันลา -->
-     <mat-card class="calendar-card">
-        <mat-card-title>ปฏิทินการลา</mat-card-title>
-        <mat-calendar [selected]="selectedDate"></mat-calendar>
-      </mat-card>
-</form>
+<mat-toolbar color="primary">
+  <span>ปฏิทินการลา</span>
+  <mat-form-field>
+    <mat-label>แผนก</mat-label>
+      <mat-select>
+        <mat-option value="one">ทั้งหมด</mat-option>
+        <mat-option value="two">IT</mat-option>
+        <mat-option value="two">SD</mat-option>
+      </mat-select>
+  </mat-form-field>
+</mat-toolbar>
+
+<mat-calendar [(selected)]="selectedDate"></mat-calendar>
+
+<div class="form-group">
+  <mat-select placeholder="ประเภทเหตุการณ์" [(value)]="eventType" class="example-select">
+    <mat-option *ngFor="let type of eventTypes" [value]="type">
+      {{ type }}
+    </mat-option>
+  </mat-select>
+
+  <button mat-button color="primary" (click)="addEvent()">เพิ่มเหตุการณ์</button>
+</div>
+
+<div class="calendar-events">
+  <div *ngFor="let event of events" class="event-card">
+    <div [ngClass]="{
+        'leave': event.type === 'leave',
+        'sick': event.type === 'sick',
+        'work': event.type === 'work'
+      }">
+      <span>{{ event.date | date: 'shortDate' }}</span>
+      <span>{{ event.description }}</span>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,98 @@
+/* การออกแบบสำหรับ toolbar */
+mat-toolbar {
+    background-color: #3f51b5; /* สีฟ้าลึก */
+    color: white;
+    display: flex;
+    justify-content: space-between;
+    padding: 10px 20px;
+    font-size: 16px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+mat-toolbar mat-select {
+    color: white;
+    font-size: 14px;
+    padding: 5px;
+}
+
+/* การออกแบบสำหรับการเลือกประเภทเหตุการณ์ */
+.form-group {
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+button {
+    margin-top: 10px;
+}
+
+/* การออกแบบสำหรับ container ของเหตุการณ์ */
+.calendar-events {
+    padding: 20px;
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+/* การออกแบบสำหรับแต่ละ event card */
+.event-card {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px;
+    margin: 10px 0;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    background-color: #fff;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.event-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 6px 10px rgba(0, 0, 0, 0.15);
+}
+
+/* การออกแบบสำหรับเหตุการณ์ลา (ลาป่วย) */
+.leave {
+    background-color: #ffebee; /* สีชมพูอ่อน */
+    border-left: 4px solid #f44336; /* ขอบซ้ายสีแดง */
+}
+
+/* การออกแบบสำหรับเหตุการณ์ลากิจ */
+.sick {
+    background-color: #fff9c4; /* สีเหลืองอ่อน */
+    border-left: 4px solid #ffeb3b; /* ขอบซ้ายสีเหลือง */
+}
+
+/* การออกแบบสำหรับเหตุการณ์ทำงาน */
+.work {
+    background-color: #e3f2fd; /* สีน้ำเงินอ่อน */
+    border-left: 4px solid #2196f3; /* ขอบซ้ายสีน้ำเงิน */
+}
+
+/* การออกแบบสำหรับปฏิทิน */
+mat-calendar {
+    margin: 30px 0;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    background-color: #fff;
+}
+
+mat-calendar .mat-calendar-body {
+    border-radius: 8px;
+}
+
+mat-calendar .mat-calendar-body-cell {
+    border-radius: 50%;
+    transition: background-color 0.2s ease;
+}
+
+mat-calendar .mat-calendar-body-cell:hover {
+    background-color: #f1f1f1;
+}
+
+/* การออกแบบสำหรับวันที่และคำอธิบายเหตุการณ์ */
+.event-card span {
+    font-size: 14px;
+    color: #333;
+}

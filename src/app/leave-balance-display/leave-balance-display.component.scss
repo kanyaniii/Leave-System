@@ -117,13 +117,27 @@ button[color="dang"] {
   padding: 15px;
 }
 
-/* ใช้ Flexbox สำหรับจัดเรียงข้อมูลในแต่ละแถว */
 .detail-row {
   display: flex;
-  justify-content:space-between; 
-  margin-bottom: 15px;   
-  gap: 10px;           
+  justify-content: flex-start; 
+  margin-bottom: 15px;
+  gap: 15px;  
 }
+
+.detail-item, .detail-day {
+  flex: 1; /* ให้มีพื้นที่เท่าๆ กัน */
+  text-align: left; 
+}
+
+.detail-start, .detail-end {
+  flex: 1; /* ให้มีพื้นที่เท่าๆ กัน */
+  text-align: left; 
+}
+
+.detail-day {
+  text-align: left; 
+}
+
 
 .detail-item, .detail-day, .detail-start, .detail-end, .detail-reason {
   display: flex;

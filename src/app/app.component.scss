@@ -1,3 +1,22 @@
+.theme {
+  margin-right: auto; /* ทำให้ปุ่ม theme อยู่ทางซ้ายสุด */
+  background: none;
+  border: none;
+  color: inherit;
+  cursor: pointer;
+}
+
+.theme mat-icon {
+  font-size: 24px;
+}
+
+.img {
+  margin-right: auto; /* ทำให้ปุ่ม theme อยู่ทางซ้ายสุด */
+  background: none;
+  border: none;
+  color: inherit;
+  cursor: pointer;
+}
 
 .nav-container {
     max-width: 970px;
@@ -15,7 +34,6 @@
     flex-direction: column;
     align-items: center;
     margin-top: 20px;
-    
   }
   
   /* สไตล์สำหรับรายการในเมนู */

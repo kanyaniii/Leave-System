@@ -1,17 +1,16 @@
 import { Component } from '@angular/core';
+import { CommonModule } from '@angular/common'; 
 
 import { FormsModule, } from '@angular/forms';
 import { MatDatepickerModule } from '@angular/material/datepicker';
-import { MatInputModule } from '@angular/material/input';
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSelectModule } from '@angular/material/select';
 import { MatIconModule } from '@angular/material/icon';
-import { MatTableModule } from '@angular/material/table';
-import {MatTabsModule} from '@angular/material/tabs';
 import {MatPaginatorModule} from '@angular/material/paginator';
 import { MatCardModule } from '@angular/material/card';
-import { MatChipsModule } from '@angular/material/chips';
+import { MatToolbarModule } from '@angular/material/toolbar';
+
 
 @Component({
   selector: 'app-datepicker',
@@ -19,20 +18,50 @@ import { MatChipsModule } from '@angular/material/chips';
   imports: [
     FormsModule,
      MatDatepickerModule,
-     MatInputModule,
      MatNativeDateModule,
      MatFormFieldModule,
      MatSelectModule,
      MatIconModule,
-     MatTableModule,
-     MatTabsModule,
      MatPaginatorModule,
      MatCardModule,
-     MatChipsModule
+     MatToolbarModule,
+     CommonModule
   ],
   templateUrl: './datepicker.component.html',
   styleUrl: './datepicker.component.scss'
 })
 export class DatepickerComponent {
-  selectedDate = new Date();
+  selectedDate: Date | null = null;
+  selectedPerson: string = '';
+  eventType: string = '';
+  people = ['บุคลากร 1', 'บุคลากร 2', 'บุคลากร 3'];
+  eventTypes = ['ลาป่วย', 'ลากิจ', 'สัมมนาผู้บริหาร']; // ประเภทเหตุการณ์
+  events = [
+    { date: new Date(2025, 1, 16), type: 'leave', description: 'ลาป่วย' },
+    { date: new Date(2025, 1, 17), type: 'leave', description: 'ลาป่วย' },
+    { date: new Date(2025, 1, 23), type: 'work', description: 'สัมมนาผู้บริหาร' },
+    { date: new Date(2025, 1, 24), type: 'work', description: 'สัมมนาผู้บริหาร' },
+  ];
+
+  // ฟังก์ชันเพิ่มเหตุการณ์
+  addEvent() {
+    if (this.selectedDate && this.selectedPerson && this.eventType) {
+      const newEvent = {
+        date: new Date(this.selectedDate),
+        type: this.eventType === 'ลาป่วย' ? 'leave' : this.eventType === 'ลากิจ' ? 'sick' : 'work',
+        description: `${this.selectedPerson} - ${this.eventType}`,
+      };
+      this.events.push(newEvent);
+      this.resetForm();
+    } else {
+      alert('กรุณากรอกข้อมูลให้ครบถ้วน');
+    }
+  }
+
+  // ฟังก์ชันรีเซ็ตค่าในฟอร์ม
+  resetForm() {
+    this.selectedDate = null;
+    this.selectedPerson = '';
+    this.eventType = '';
+  }
 }

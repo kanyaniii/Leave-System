@@ -1,7 +1,11 @@
 import { Component, OnInit, ElementRef, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { Router } from '@angular/router';
 import Swal from 'sweetalert2';
 import * as XLSX from 'xlsx'; // นำเข้าไลบรารี xlsx
+import { ChartsModule } from 'ng2-charts';  // นำเข้าโมดูล ChartsModule
+import { ChartOptions, ChartData, ChartType } from 'chart.js';
+
 //import * as echarts from 'echarts';
 
 import { FormsModule, } from '@angular/forms';
@@ -18,9 +22,7 @@ import { MatCardModule } from '@angular/material/card';
 import { MatChipsModule } from '@angular/material/chips';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatTableDataSource } from '@angular/material/table';  // ใช้สำหรับแสดงข้อมูลในตาราง
-//import { ChartsModule } from 'ng2-charts'; // นำเข้าโมดูล Charts
-//import { ChartDataSets, ChartOptions } from 'chart.js';
-//import { Color, Label } from 'ng2-charts';
+
 
 @Component({
   selector: 'app-leave-history',
@@ -38,7 +40,7 @@ import { MatTableDataSource } from '@angular/material/table';  // ใช้ส�
        MatPaginatorModule,
        MatCardModule,
        MatChipsModule,
-       MatDividerModule
+       MatDividerModule,
        //ChartsModule
   ],
   templateUrl: './leave-history.component.html',
@@ -47,7 +49,7 @@ import { MatTableDataSource } from '@angular/material/table';  // ใช้ส�
 export class LeaveHistoryComponent implements OnInit {
   @ViewChild('leaveChart') leaveChartElement!: ElementRef;
 
-  leaveDetails: any[] = [];  // รายการการลา
+
   leaveType: string = '';
   startDate: string = '';
   endDate: string = '';
@@ -58,27 +60,59 @@ export class LeaveHistoryComponent implements OnInit {
   displayedColumns: string[] = ['leaveType', 'startDate', 'endDate', 'leaveReason', 'status']; 
   dataSource = new MatTableDataSource(this.leaveHistory);
 
+  leaveDetails = [
+    {
+      name: 'บิ๋ม บิ๋ม', leaveType: 'นักศึกษาฝึกงาน', sickLeave: 1, personalLeave: 0, vacationLeave: 0, together: 1
+    },
+    {
+      name: 'สมชาย ใจดี', leaveType: 'IT', sickLeave: 2, personalLeave: 1, vacationLeave: 0, together: 3
+    },
+    {
+      name: 'สมหญิง รักษางาน', leaveType: 'HR', sickLeave: 1, personalLeave: 2, vacationLeave: 1, together: 4
+    }
+  ];
+
+  // กราฟ
+  // public barChartOptions: ChartOptions = {
+  //   responsive: true,
+  // };
+  // public barChartLabels: string[] = ['ลาป่วย', 'ลากิจ', 'ลาพักร้อน'];
+  // public barChartData: ChartData<'bar'> = {
+  //   labels: this.barChartLabels,
+  //   datasets: [
+  //     {
+  //       data: [10, 5, 7], 
+  //       label: 'จำนวนการลา',
+  //       backgroundColor: '#42A5F5',
+  //       borderColor: '#1E88E5',
+  //       borderWidth: 1,
+  //     },
+  //   ],
+  // };
+  // public barChartType: ChartType = 'bar'; 
+  
+
   constructor(private route: ActivatedRoute) {}
 
   ngOnInit() {
     this.route.queryParams.subscribe(params => {
-      this.leaveType = params['leaveType'];
-      this.startDate = params['startDate'];
-      this.endDate = params['endDate'];
-      this.leaveReason = params['leaveReason'];
-      this.status = params['status'];
+      const leaveType = params['leaveType'];
+      const startDate = params['startDate'];
+      const endDate = params['endDate'];
+      const leaveReason = params['leaveReason'];
+      const status = params['status'];
 
-      if (this.status === 'อนุมัติ') {
+      if (status === 'อนุมัติ') {
         this.leaveHistory.push({
-          leaveType: this.leaveType,
-          startDate: this.startDate,
-          endDate: this.endDate,
-          leaveReason: this.leaveReason,
-          status: 'อนุมัติ'
+          leaveType: leaveType,
+          startDate: startDate,
+          endDate: endDate,
+          leaveReason: leaveReason,
+          status: status
         });
 
-        // อัพเดตข้อมูลใน MatTableDataSource เพื่อให้แสดงในตาราง
-        this.dataSource.data = this.leaveHistory;
+        // อัปเดต dataSource
+        this.dataSource = new MatTableDataSource(this.leaveHistory);
       }
     });
   }

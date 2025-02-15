@@ -3,14 +3,14 @@ import { RouterOutlet } from '@angular/router';
 import { MatCardModule } from '@angular/material/card';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatTabsModule } from '@angular/material/tabs';
-
+import { FormsModule } from '@angular/forms';
 
 import { LeaveRequestFormComponent } from './leave-request-form/leave-request-form.component';
 import { LeaveBalanceDisplayComponent } from './leave-balance-display/leave-balance-display.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { LeaveHistoryComponent } from './leave-history/leave-history.component';
 import { NavbarComponent } from './Features/navbar/navbar.component';
-import { RoleGuardComponent } from './role-guard/role-guard.component'
+import { DatepickerComponent } from './dashboard/components/datepicker/datepicker.component'
 
 import { MatIconModule } from '@angular/material/icon';
 
@@ -25,10 +25,11 @@ import { MatIconModule } from '@angular/material/icon';
     LeaveHistoryComponent,
     NavbarComponent,
     MatIconModule,
-    RoleGuardComponent,
+    DatepickerComponent,
     MatCardModule,
     MatDividerModule,
-    MatTabsModule
+    MatTabsModule,
+    FormsModule
   ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss'
@@ -36,7 +37,7 @@ import { MatIconModule } from '@angular/material/icon';
 export class AppComponent {
   title = 'leaveSystem-angular';
 
-  currentComponent: string = ''; // ตัวแปรที่เก็บชื่อ component ที่จะถูกแสดง
+  currentComponent: string = ''; 
   isDarkMode = false;
 
   // ฟังก์ชันในการเปลี่ยนธีม
@@ -44,9 +45,9 @@ export class AppComponent {
     this.isDarkMode = !this.isDarkMode;
     // สลับธีมตามค่า isDarkMode
     if (this.isDarkMode) {
-      document.documentElement.setAttribute('data-theme', 'dark'); // ใช้ธีมมืด
+      document.documentElement.setAttribute('data-theme', 'dark');
     } else {
-      document.documentElement.setAttribute('data-theme', 'light'); // ใช้ธีมสว่าง
+      document.documentElement.setAttribute('data-theme', 'light'); 
     }
   }
 

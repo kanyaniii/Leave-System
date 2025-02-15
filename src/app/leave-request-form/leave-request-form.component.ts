@@ -64,6 +64,18 @@ export class LeaveRequestFormComponent {
         days: days
       }
     });
+
+    this.router.navigate(['/leave-balance-display'], {
+      queryParams: {
+        leaveType: this.leaveType,
+        startDate: this.startDate,
+        endDate: this.endDate,
+        leaveReason: this.leaveReason,
+        status: 'อนุมัติ',
+        days: days
+      }
+    });
+
   
     Swal.fire({
       title: "คำขอลาได้ถูกส่งแล้ว!",

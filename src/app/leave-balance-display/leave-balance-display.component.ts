@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Router } from '@angular/router';
+import { CommonModule } from '@angular/common';
 import Swal from 'sweetalert2';
 import { MatTableDataSource } from '@angular/material/table';  
 import { DatePipe } from '@angular/common';
@@ -36,7 +37,8 @@ import { MatDividerModule } from '@angular/material/divider';
     MatCardModule,
     MatChipsModule,
     MatDividerModule,
-    DatePipe
+    DatePipe,
+    CommonModule
   ],
   templateUrl: './leave-balance-display.component.html',
   styleUrls: ['./leave-balance-display.component.scss'],
@@ -57,26 +59,38 @@ export class LeaveBalanceDisplayComponent implements OnInit {
 
   ngOnInit() {
     this.route.queryParams.subscribe(params => {
+      console.log('Query Params:', params);
       this.leaveType = params['leaveType'];
       this.startDate = params['startDate'];
       this.endDate = params['endDate'];
       this.leaveReason = params['leaveReason'];
       const status = params['status'];
-      const days = this.calculateDays(this.startDate, this.endDate);
+      const days = params['days'];
+  
+      // คุณสามารถแสดงข้อมูลต่างๆ ที่ได้รับจาก queryParams
+      console.log('Leave Type:', this.leaveType);
+      console.log('Start Date:', this.startDate);
+      console.log('End Date:', this.endDate);
+      console.log('Leave Reason:', this.leaveReason);
+      console.log('Days:', days);
 
-      if (status === 'รออนุมัติ') {
-        this.pendingRequests.push({
+        const newRequest = {
           leaveType: this.leaveType,
           startDate: this.startDate,
           endDate: this.endDate,
           leaveReason: this.leaveReason,
           days: days,
           status: 'รออนุมัติ'
-        });
-        this.dataSource.data = this.pendingRequests;
-      }
+        };
+  
+        // เพิ่มข้อมูลคำขอที่รออนุมัติ
+        this.pendingRequests.push(newRequest);
+        console.log('Updated pending requests:', this.pendingRequests); 
+  
+        // อัปเดต MatTableDataSource หลังจากเพิ่มข้อมูลใหม่
+        this.dataSource = new MatTableDataSource(this.pendingRequests);  // อัปเดตให้ dataSource ใช้ pendingRequests
     });
-  }
+  }  
 
   getFormattedStartDate(date: string) {
     return this.datePipe.transform(date, 'M/d/yyyy');
@@ -93,40 +107,64 @@ export class LeaveBalanceDisplayComponent implements OnInit {
     return Math.floor(timeDifference / (1000 * 3600 * 24)) + 1; // รวมวันเริ่มต้น
   }
 
-  // ฟังก์ชันอนุมัติคำขอ
   approveLeave(request: any) {
-    const index = this.pendingRequests.indexOf(request);
-    if (index > -1) {
-      this.pendingRequests[index].status = 'อนุมัติ';
-      this.approvedRequests.push(this.pendingRequests[index]);
-      this.pendingRequests.splice(index, 1);
+    if (request) {
+      const index = this.pendingRequests.indexOf(request);
+      if (index > -1) {
+        this.pendingRequests[index].status = 'อนุมัติ';
+        this.approvedRequests.push(this.pendingRequests[index]);
+        this.pendingRequests.splice(index, 1);
+  
+        // อัปเดต dataSource หลังจากการเปลี่ยนแปลง
+        this.dataSource = new MatTableDataSource(this.pendingRequests);
+  
+        Swal.fire({
+          title: 'คำขอลาถูกอนุมัติ!',
+          text: 'คำขอลาได้รับการอนุมัติเรียบร้อยแล้ว',
+          icon: 'success',
+          confirmButtonText: 'ตกลง'
+        });
+  
+        // ส่งข้อมูลไปยังหน้า LeaveHistoryComponent
+        this.router.navigate(['/leave-history'], {
+          queryParams: {
+            leaveType: request.leaveType,
+            startDate: request.startDate,
+            endDate: request.endDate,
+            leaveReason: request.leaveReason,
+            status: 'อนุมัติ'
+          }
+        });
+      }
     }
-
-    // อัพเดตแสดงผลในตาราง
-    this.dataSource.data = this.pendingRequests;
-    Swal.fire({
-      title: 'คำขอลาถูกอนุมัติ!',
-      text: 'คำขอลาได้รับการอนุมัติเรียบร้อยแล้ว',
-      icon: 'success',
-      confirmButtonText: 'ตกลง'
-    });
-  }
-
-  // ฟังก์ชันไม่อนุมัติคำขอ
+  }  
+  
   rejectLeave(request: any) {
     const index = this.pendingRequests.indexOf(request);
     if (index > -1) {
       this.pendingRequests[index].status = 'ไม่อนุมัติ';
       this.pendingRequests.splice(index, 1);
-    }
+  
+      // อัปเดต dataSource เพื่อให้ตารางแสดงผลใหม่
+      this.dataSource = new MatTableDataSource(this.pendingRequests);
+  
+      Swal.fire({
+        title: 'คำขอลาถูกปฏิเสธ!',
+        text: 'คำขอลาไม่ได้รับการอนุมัติ',
+        icon: 'error',
+        confirmButtonText: 'ตกลง'
+      });
 
-    // อัพเดตแสดงผลในตาราง
-    this.dataSource.data = this.pendingRequests;
-    Swal.fire({
-      title: 'คำขอลาถูกปฏิเสธ!',
-      text: 'คำขอลาไม่ได้รับการอนุมัติ',
-      icon: 'error',
-      confirmButtonText: 'ตกลง'
-    });
+      this.router.navigate(['/leave-history'], {
+        queryParams: {
+          leaveType: request.leaveType,
+          startDate: request.startDate,
+          endDate: request.endDate,
+          leaveReason: request.leaveReason,
+          status: 'อนุมัติ'
+        }
+      });
+    }
   }
+  
 }

@@ -2,7 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { MatTableDataSource } from '@angular/material/table';  // ใช้สำหรับแสดงข้อมูลในตาราง
 import { DatePipe } from '@angular/common';
-
+import { Store, select } from '@ngrx/store';
+import * as LeaveActions from '../state/actions/leave.actions';
+import * as LeaveSelectors from '../state/selectors/leave.selectors';
 
 import { FormsModule } from '@angular/forms';
 import { MatDatepickerModule } from '@angular/material/datepicker';
@@ -58,7 +60,19 @@ export class DashboardComponent implements OnInit {
   totalLeaveUsed: number = 0; // จำนวนวันลาที่ใช้ไป
 
   displayedColumns: string[] = ['startDate', 'endDate', 'leaveType', 'days', 'status']; // กำหนดคอลัมน์ที่จะใช้ในตาราง
-  dataSource = new MatTableDataSource(this.approvedRequests);  // ใช้ MatTableDataSource สำหรับตาราง
+  dataSource = new MatTableDataSource(this.approvedRequests);  
+
+  leaveDetails = [
+    {
+      startDate: '2/17/202', endDate: '2/27/202', leaveType:'ลาป่วย', days: 10,  status: 'รออนุมัติ'
+    },
+    {
+      startDate: '2/07/202', endDate: '2/10/202', leaveType: 'ลากิจ', days: 3,status:  'อนุมัติ'
+    },
+    {
+      startDate: '1/17/202', endDate: '2/19/202', leaveType:'ลาพักร้อน', days: 2,  status: 'ไม่รออนุมัติ'
+    }
+  ];
 
   constructor(private route: ActivatedRoute, private datePipe: DatePipe) {}
 
@@ -71,32 +85,49 @@ export class DashboardComponent implements OnInit {
       this.leaveReason = params['leaveReason'];
       this.status = params['status'];
       this.days = params['days'];
-
+  
       // ถ้าคำขอได้รับการอนุมัติ
       if (this.status === 'อนุมัติ') {
-        this.approvedRequests.push({
+        const newRequest = {
           startDate: this.startDate,
           endDate: this.endDate,
           leaveType: this.leaveType,
           days: this.days,
           status: 'อนุมัติ'
-        });
-
+        };
+  
+        // เพิ่มคำขอลงใน approvedRequests
+        this.approvedRequests.push(newRequest);
         this.totalLeaveUsed += this.days; // เพิ่มจำนวนวันที่ใช้ไป
-
-        // อัพเดตข้อมูลใน MatTableDataSource เพื่อให้แสดงในตาราง
-        this.dataSource.data = this.approvedRequests;
+  
+        // อัปเดต MatTableDataSource ด้วยข้อมูลที่เพิ่มขึ้น
+        this.dataSource = new MatTableDataSource(this.approvedRequests);
       } else if (this.status === 'รออนุมัติ') {
-        this.pendingRequests.push({
+        const newRequest = {
           startDate: this.startDate,
           endDate: this.endDate,
           leaveType: this.leaveType,
           days: this.days,
           status: 'รออนุมัติ'
-        });
+        };
+  
+        this.pendingRequests.push(newRequest);
       }
     });
   }
+
+  getStatusColor(status: string): string {
+    switch (status) {
+      case 'อนุมัติ':
+        return 'primary';  // สีเขียว
+      case 'รออนุมัติ':
+        return 'accent';   // สีเหลือง
+      case 'ไม่อนุมัติ':
+        return 'warn';     // สีแดง
+      default:
+        return 'basic';    // สีพื้นฐาน (อาจเป็นสีเทา)
+    }
+  }  
 
   // ฟังก์ชันแปลงวันที่เป็นรูปแบบที่ต้องการ
   getFormattedStartDate(date: string) {
@@ -121,9 +152,9 @@ export class DashboardComponent implements OnInit {
   getTotalLeaveUsed(): number {
     let totalUsed = 0;
     this.approvedRequests.forEach(request => {
-      totalUsed += parseInt(request.days, 10);  // แปลงวันเป็นตัวเลข
+      totalUsed += parseInt(request.days, 10);  
     });
-    return totalUsed;  // คืนค่าเป็นตัวเลขที่ไม่มีเลข 0 ข้างหน้า
+    return totalUsed; 
   }
 
   // ฟังก์ชันคำนวณจำนวนวันระหว่างวันที่เริ่มต้นและวันที่สิ้นสุด
